@@ -1,4 +1,4 @@
-// Importing necessary modules and files
+
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import { Insurance } from "../models/insuranceSchema.js";
 import ErrorHandler from "../middlewares/error.js";
@@ -12,7 +12,6 @@ export const getAllInsurances = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Controller function to post a new insurance
 export const postInsurance = catchAsyncErrors(async (req, res, next) => {
   const { role } = req.user;
   if (role === "Insurance Seeker") {
@@ -21,7 +20,7 @@ export const postInsurance = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-  // Extracting details from request body
+
   const {
     title,
     description,
@@ -34,12 +33,12 @@ export const postInsurance = catchAsyncErrors(async (req, res, next) => {
     premiumTo,
   } = req.body;
 
-  // Validation for required fields
+  
   if (!title || !description || !category || !country || !city || !location) {
     return next(new ErrorHandler("Please provide full insurance details.", 400));
   }
 
-  // Validation for premium information
+
   if ((!premiumFrom || !premiumTo) && !fixedPremium) {
     return next(
       new ErrorHandler(
@@ -55,7 +54,7 @@ export const postInsurance = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-  // Create and save the insurance
+
   const postedBy = req.user._id;
   const insurance = await Insurance.create({
     title,
@@ -93,7 +92,6 @@ export const getMyInsurances = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Controller function to update insurance details
 export const updateInsurance = catchAsyncErrors(async (req, res, next) => {
   const { role } = req.user;
   if (role === "Insurance Seeker") {
@@ -102,30 +100,28 @@ export const updateInsurance = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-  // Extract insurance ID from request params
+  
   const { id } = req.params;
   let insurance = await Insurance.findById(id);
 
-  // Check if insurance exists
   if (!insurance) {
     return next(new ErrorHandler("OOPS! Insurance not found.", 404));
   }
 
-  // Update insurance details
+
   insurance = await Insurance.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
 
-  // Respond with success message
   res.status(200).json({
     success: true,
     message: "Insurance Updated!",
   });
 });
 
-// Controller function to delete an insurance
+
 export const deleteInsurance = catchAsyncErrors(async (req, res, next) => {
   const { role } = req.user;
   if (role === "Insurance Seeker") {
@@ -134,7 +130,7 @@ export const deleteInsurance = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-  // Extract insurance ID from request params
+
   const { id } = req.params;
   const insurance = await Insurance.findById(id);
 
@@ -143,37 +139,34 @@ export const deleteInsurance = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("OOPS! Insurance not found.", 404));
   }
 
-  // Delete the insurance
   await insurance.deleteOne();
 
-  // Respond with success message
+
   res.status(200).json({
     success: true,
     message: "Insurance Deleted!",
   });
 });
 
-// Controller function to get details of a specific insurance
+
 export const getSingleInsurance = catchAsyncErrors(async (req, res, next) => {
   // Extract insurance ID from request params
   const { id } = req.params;
 
   try {
-    // Find the insurance by ID
+    
     const insurance = await Insurance.findById(id);
 
     // If insurance not found, return an error
     if (!insurance) {
       return next(new ErrorHandler("Insurance not found.", 404));
     }
-
-    // Respond with success and insurance details
     res.status(200).json({
       success: true,
       insurance,
     });
   } catch (error) {
-    // Handle invalid ID or CastError
+   
     return next(new ErrorHandler(`Invalid ID / CastError`, 404));
   }
 });
