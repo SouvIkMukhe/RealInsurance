@@ -2,7 +2,9 @@ import React from "react";
 import { FaMicrosoft, FaApple } from "react-icons/fa";
 import { SiTesla } from "react-icons/si";
 
+// PopularCompanies component
 const PopularCompanies = () => {
+  // Companies data
   const companies = [
     {
       id: 1,
@@ -26,14 +28,19 @@ const PopularCompanies = () => {
       icon: <FaApple />,
     },
   ];
+
+  // Render the PopularCompanies component
   return (
     <div className="companies">
       <div className="container">
+        {/* Section title */}
         <h3>TOP COMPANIES</h3>
+        {/* Banner containing company cards */}
         <div className="banner">
           {companies.map((element) => {
             return (
               <div className="card" key={element.id}>
+                {/* Company icon and details */}
                 <div className="content">
                   <div className="icon">{element.icon}</div>
                   <div className="text">
@@ -41,6 +48,7 @@ const PopularCompanies = () => {
                     <p>{element.location}</p>
                   </div>
                 </div>
+                {/* Button to view open schemes */}
                 <button>Open Schemes {element.openSchemes}</button>
               </div>
             );

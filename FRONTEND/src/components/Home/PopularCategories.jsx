@@ -10,7 +10,10 @@ import { FaReact } from "react-icons/fa";
 import { GiArtificialIntelligence } from "react-icons/gi";
 import { IoGameController } from "react-icons/io5";
 
+
+// PopularCategories component
 const PopularCategories = () => {
+  // Categories data
   const categories = [
     {
       id: 1,
@@ -22,11 +25,11 @@ const PopularCategories = () => {
       id: 2,
       title: "Mobile and Laptop",
       subTitle: "500 Open Schemes",
-      icon: <TbAppsFilled />,
+      icon: <mdiMonitorCellphone />,
     },
     {
       id: 3,
-      title: "Building",
+      title: "Home",
       subTitle: "200 Open Schemes",
       icon: <MdOutlineWebhook />,
     },
@@ -50,7 +53,7 @@ const PopularCategories = () => {
     },
     {
       id: 7,
-      title: "Video ",
+      title: "Fire ",
       subTitle: "50 Open Schemes",
       icon: <MdOutlineAnimation />,
     },
@@ -61,14 +64,20 @@ const PopularCategories = () => {
       icon: <IoGameController />,
     },
   ];
+
+  // Render the PopularCategories component
   return (
     <div className="categories">
+      {/* Section title */}
       <h3>POPULAR CATEGORIES</h3>
+      {/* Banner containing category cards */}
       <div className="banner">
         {categories.map((element) => {
           return (
             <div className="card" key={element.id}>
+              {/* Category icon */}
               <div className="icon">{element.icon}</div>
+              {/* Category title and subtitle */}
               <div className="text">
                 <p>{element.title}</p>
                 <p>{element.subTitle}</p>

@@ -1,7 +1,9 @@
 import React from "react";
 import { FaBuilding, FaSuitcase, FaUsers, FaUserPlus } from "react-icons/fa";
 
+// HeroSection component
 const HeroSection = () => {
+  // Details for statistics cards
   const details = [
     {
       id: 1,
@@ -28,24 +30,28 @@ const HeroSection = () => {
       icon: <FaUserPlus />,
     },
   ];
+
+  // Render the HeroSection component
   return (
     <>
       <div className="heroSection">
         <div className="container">
+          {/* Title and description */}
           <div className="title">
-          <h1>Discover Insurance Tailored for You</h1>
-<p>
-Explore a diverse range of insurance options designed to meet your unique
-  needs and financial goals. We understand that life is full of uncertainties,
-  and our mission is to provide you with comprehensive coverage that brings
-  peace of mind.
-</p>
-
+            <h1>Discover Insurance Tailored for You</h1>
+            <p>
+              Explore a diverse range of insurance options designed to meet your unique
+              needs and financial goals. We understand that life is full of uncertainties,
+              and our mission is to provide you with comprehensive coverage that brings
+              peace of mind.
+            </p>
           </div>
+          {/* Image */}
           <div className="image">
             <img src="/heroT.png" alt="hero" />
           </div>
         </div>
+        {/* Statistics cards */}
         <div className="details">
           {details.map((element) => {
             return (

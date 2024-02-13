@@ -92,7 +92,7 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: #fff;
+  background: #beeef5;
   padding: 20px 20px;
 }
 
@@ -130,7 +130,7 @@ p {
 }
 .authPage .container form .inputTag div input,
 .authPage .container form .inputTag div select {
-  background: #87878778;
+  background: #d4fc7978;
   padding: 8px;
   border: none;
   width: 100%;
@@ -146,7 +146,7 @@ p {
   background: #2d5649;
   height: 100%;
   padding: 8px;
-  color: #fff;
+  color: #aa4f4f;
 }
 .authPage .container form button {
   padding: 12px;
@@ -154,7 +154,7 @@ p {
   border: none;
   margin-top: 25px;
   font-weight: 700;
-  color: #fff;
+  color: #f1f1e9;
   background: #2d5649;
   font-size: 1.2rem;
   border-radius: 7px;
@@ -205,7 +205,7 @@ p {
 }
 
 .footerShow {
-  background: #18191c;
+  background: #5e6375;
   display: flex;
   justify-content: space-between;
   padding: 25px 120px;
@@ -375,7 +375,7 @@ p {
   }
 }
 .howitworks {
-  background: #f1f3f6;
+  background: #a4c6fa;
 }
 .howitworks .container {
   max-width: 1500px;
@@ -393,7 +393,7 @@ p {
   gap: 25px;
 }
 .howitworks .container .banner .card {
-  background: #fff;
+  background: #e7e4e4;
   display: flex;
   text-align: center;
   flex-direction: column;
@@ -462,7 +462,7 @@ p {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #f1f3f6;
+  background: #d7f3b2;
 }
 .categories .banner .card:hover {
   transition: all 0.3s;
@@ -509,7 +509,7 @@ p {
 }
 
 .companies {
-  background: #f1f3f6;
+  background: #adddd1;
   padding: 50px 0;
 }
 .companies .container {
@@ -594,7 +594,7 @@ p {
   }
 }
 .insurances {
-  background: #f1f3f6;
+  background: #dee7ba;
   min-height: 100vh;
   padding: 50px 20px;
 }
@@ -671,7 +671,7 @@ p {
 }
 
 .insuranceDetail {
-  background: #f1f3f6;
+  background: #a4e2c0;
   padding: 50px 20px;
 }
 .insuranceDetail .container {
@@ -777,7 +777,7 @@ p {
   }
 }
 .my_applications {
-  background: #f1f3f6;
+  background: #a8ffe2;
   padding: 50px 20px;
   min-height: 885px;
 }
@@ -878,7 +878,7 @@ p {
 }
 
 .insurance_post {
-  background: #f1f3f6;
+  background: #d7e5fa;
   padding: 50px 20px;
   min-height: 870px;
   display: flex;
@@ -981,7 +981,7 @@ p {
   }
 }
 .myInsurances {
-  background: #f1f3f6;
+  background: #b2d1bb;
   padding: 50px 20px;
   min-height: 870px;
 }

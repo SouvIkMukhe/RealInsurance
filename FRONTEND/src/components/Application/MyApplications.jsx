@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import AadharModal from "./AadharModal";
 import { useNavigate } from "react-router-dom";
 
+// MyApplications component
 const MyApplications = () => {
   const { user } = useContext(Context);
   const [applications, setApplications] = useState([]);
@@ -14,6 +15,7 @@ const MyApplications = () => {
   const { isAuthorized } = useContext(Context);
   const navigateTo = useNavigate();
 
+  // Function to handle actions (accept/reject) on insurance applications
   const handleApplicationAction = async (id, action) => {
     try {
       const res = await axios.patch(
@@ -38,6 +40,7 @@ const MyApplications = () => {
 
   useEffect(() => {
     try {
+      // Fetch applications based on user role (Admin or Insurance Seeker)
       const fetchApplications = async () => {
         let response;
 
@@ -60,10 +63,12 @@ const MyApplications = () => {
     }
   }, [isAuthorized]);
 
+  // Redirect to home if not authorized
   if (!isAuthorized) {
     navigateTo("/");
   }
 
+  // Function to delete an application
   const deleteApplication = (id) => {
     try {
       axios
@@ -81,11 +86,13 @@ const MyApplications = () => {
     }
   };
 
+  // Function to open the AadharModal with the clicked Aadhar image
   const openModal = (imageUrl) => {
     setAadharImageUrl(imageUrl);
     setModalOpen(true);
   };
 
+  // Function to close the AadharModal
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -93,6 +100,7 @@ const MyApplications = () => {
   return (
     <section className="my_applications page">
       {user && user.role === "Insurance Seeker" ? (
+        // Render applications for Insurance Seekers
         <div className="container">
           <h1>My Applications</h1>
           {applications.length <= 0 ? (
@@ -114,6 +122,7 @@ const MyApplications = () => {
           )}
         </div>
       ) : (
+        // Render applications for Admins
         <div className="container">
           <h1>Applications From Insurance Seekers</h1>
           {applications.length <= 0 ? (
@@ -134,6 +143,7 @@ const MyApplications = () => {
           )}
         </div>
       )}
+      {/* Render AadharModal if modalOpen state is true */}
       {modalOpen && (
         <AadharModal imageUrl={aadharImageUrl} onClose={closeModal} />
       )}
@@ -143,11 +153,13 @@ const MyApplications = () => {
 
 export default MyApplications;
 
+// InsuranceSeekerCard component
 const InsuranceSeekerCard = ({ element, deleteApplication, openModal }) => {
   return (
     <>
       <div className="insurance_seeker_card">
         <div className="detail">
+          {/* Display user details */}
           <p>
             <span>Name:</span> {element.name}
           </p>
@@ -165,6 +177,7 @@ const InsuranceSeekerCard = ({ element, deleteApplication, openModal }) => {
           </p>
         </div>
         <div className="aadhar">
+          {/* Display Aadhar image with click handler to open modal */}
           <img
             src={element.aadhar.url}
             alt="aadhar"
@@ -172,6 +185,7 @@ const InsuranceSeekerCard = ({ element, deleteApplication, openModal }) => {
           />
         </div>
         <div className="btn_area">
+          {/* Button to delete the application */}
           <button onClick={() => deleteApplication(element._id)}>
             Delete Application
           </button>
@@ -181,11 +195,13 @@ const InsuranceSeekerCard = ({ element, deleteApplication, openModal }) => {
   );
 };
 
+// AdminCard component
 const AdminCard = ({ element, openModal, handleApplicationAction }) => {
   return (
     <>
       <div className="insurance_seeker_card">
         <div className="detail">
+          {/* Display user details */}
           <p>
             <span>Name:</span> {element.name}
           </p>
@@ -203,6 +219,7 @@ const AdminCard = ({ element, openModal, handleApplicationAction }) => {
           </p>
         </div>
         <div className="aadhar">
+          {/* Display Aadhar image with click handler to open modal */}
           <img
             src={element.aadhar.url}
             alt="aadhar"
@@ -210,12 +227,14 @@ const AdminCard = ({ element, openModal, handleApplicationAction }) => {
           />
         </div>
         <div className="btn_area">
+          {/* Buttons to accept or reject the application */}
+          {/*
           <button onClick={() => handleApplicationAction(element._id, "accept")}>
             Accept Application
           </button>
           <button onClick={() => handleApplicationAction(element._id, "reject")}>
             Reject Application
-          </button>
+  </button>*/}
         </div>
       </div>
     </>

@@ -101,6 +101,11 @@ const PostInsurance = () => {
               >
                 <option value="">Select Category</option>
                 <option value="Health">Health</option>
+                <option value="Fire">Fire</option>
+                <option value="Life">Life</option>
+                <option value="Building">Building</option>
+                <option value="Car">Car</option>
+                <option value="Bike">Bike</option>
                 {/* Add other category options here */}
               </select>
             </div>
