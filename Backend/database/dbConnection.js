@@ -1,14 +1,19 @@
 import mongoose from "mongoose";
 
+// Function to establish a connection to the MongoDB database
 export const dbConnection = () => {
+  // Use mongoose to connect to the MongoDB database using the provided URI
   mongoose
     .connect(process.env.MONGO_URI, {
-      dbName: "MERN_JOB_SEEKING_WEBAPP",
+      // Specify the name of the database
+      dbName: "MERN_INSURNACE_BUYING_WEBAPP",
     })
     .then(() => {
-      console.log("Connected to database.");
+      // Log a success message when the connection is established
+      console.log("Connected to the database.");
     })
     .catch((err) => {
-      console.log(`Some Error occured. ${err}`);
+      // Log an error message if there's an issue with the database connection
+      console.log(`Some error occurred. ${err}`);
     });
 };

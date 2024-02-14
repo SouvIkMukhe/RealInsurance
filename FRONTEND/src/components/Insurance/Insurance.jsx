@@ -4,9 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../main";
 
 const Insurances = () => {
+  // State to store the list of insurances
   const [insurances, setInsurances] = useState([]);
+  
+  // Access global state using Context API
   const { isAuthorized } = useContext(Context);
+
+  // Hook to navigate to a different route
   const navigateTo = useNavigate();
+
+  // Effect to fetch all available insurances on component mount
   useEffect(() => {
     try {
       axios
@@ -20,6 +27,8 @@ const Insurances = () => {
       console.log(error);
     }
   }, []);
+
+  // Redirect to home if user is not authorized
   if (!isAuthorized) {
     navigateTo("/");
   }
@@ -29,6 +38,7 @@ const Insurances = () => {
       <div className="container">
         <h1>ALL AVAILABLE INSURANCES</h1>
         <div className="banner">
+          {/* Render each insurance card */}
           {insurances.insurances &&
             insurances.insurances.map((element) => {
               return (
@@ -36,6 +46,7 @@ const Insurances = () => {
                   <p>{element.title}</p>
                   <p>{element.category}</p>
                   <p>{element.country}</p>
+                  {/* Link to view insurance details */}
                   <Link to={`/insurance/${element._id}`}>Insurance Details</Link>
                 </div>
               );
