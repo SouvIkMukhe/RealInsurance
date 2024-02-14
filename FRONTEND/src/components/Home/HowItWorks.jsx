@@ -1,49 +1,42 @@
+// Import React and necessary components/libraries
 import React from "react";
 import { FaUserPlus } from "react-icons/fa";
 import { MdFindInPage } from "react-icons/md";
 import { IoMdSend } from "react-icons/io";
 
-// HowItWorks component
+// Functional component for the How It Works section of the website
 const HowItWorks = () => {
-  // Render the HowItWorks component
   return (
     <>
+      {/* How It Works Section UI */}
       <div className="howitworks">
         <div className="container">
-          {/* Section title */}
-          <h3>How InsuranceZee Works</h3>
-          {/* Banner containing cards explaining the process */}
+          {/* Title for the How It Works section */}
+          <h3>How RealInsurance Works</h3>
+          {/* Banner with cards explaining the process */}
           <div className="banner">
-            {/* Card 1: Create Account */}
+            {/* Card 1 - Create Your Account */}
             <div className="card">
               <FaUserPlus />
-              <p>Create Account</p>
+              <p>Create Your Account</p>
               <p>
-                Sign up and create your account to unlock a world of opportunities. Enjoy
-                personalized services and access exclusive features tailored to your needs.
-                Your journey towards a secure future begins with a simple account creation.
+                Begin your insurance journey by setting up your account. Discover the ease of managing and securing your future with personalized services designed just for you.
               </p>
             </div>
-            {/* Card 2: Find a Insurance/Post a Insurance */}
+            {/* Card 2 - Explore Insurance Options/Submit an Insurance Application */}
             <div className="card">
               <MdFindInPage />
-              <p>Find a Insurance/Post a Insurance</p>
+              <p>Explore Insurance Options/Submit an Insurance Application</p>
               <p>
-                Discover insurance plans tailored to your requirements or share your unique
-                coverage offerings. Connect with a community that values protection and
-                peace of mind. Whether you're seeking coverage or providing it, find your
-                perfect match on our platform.
+                Discover a world of insurance possibilities tailored to your needs. Take the first step towards financial security by exploring our range of insurance options or submitting an application to safeguard what matters most.
               </p>
             </div>
-            {/* Card 3: Apply For Insurance Policies */}
+            {/* Card 3 - Apply for Insurance/Find the Right Coverage */}
             <div className="card">
               <IoMdSend />
-              <p>Apply For Insurance Policies</p>
+              <p>Apply for Insurance/Find the Right Coverage</p>
               <p>
-                Applying for insurance is a crucial step towards securing your future.
-                Employers, recruit skilled candidates who understand the importance of
-                safeguarding others. Join a network where insurance meets talent, and
-                individuals contribute to building a safer and more protected society.
+                Secure your future by applying for the insurance that suits your needs. Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, culpa.
               </p>
             </div>
           </div>
@@ -53,4 +46,5 @@ const HowItWorks = () => {
   );
 };
 
+// Export the HowItWorks component
 export default HowItWorks;

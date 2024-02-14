@@ -1,37 +1,38 @@
+// Import React and necessary components/libraries
 import React from "react";
 import { useContext } from "react";
 import { Context } from "../../main";
 import { Navigate } from "react-router-dom";
+
+// Importing components used in the Home page
 import HeroSection from "./HeroSection";
 import HowItWorks from "./HowItWorks";
 import PopularCategories from "./PopularCategories";
 import PopularCompanies from "./PopularCompanies";
 
-// Home component
+// Functional component for the Home page
 const Home = () => {
-  // Accessing user authorization status from the context
+  // Accessing the global context for authorization
   const { isAuthorized } = useContext(Context);
 
-  // Redirect to login page if not authorized
+  // Redirect to the login page if not authorized
   if (!isAuthorized) {
     return <Navigate to={"/login"} />;
   }
 
-  // Render the Home component
   return (
     <>
+      {/* Home Page UI */}
       <section className="homePage page">
-        {/* Hero section */}
+        {/* Displaying components for different sections of the home page */}
         <HeroSection />
-        {/* Section explaining how it works */}
         <HowItWorks />
-        {/* Section displaying popular insurance categories */}
         <PopularCategories />
-        {/* Section displaying popular insurance companies */}
         <PopularCompanies />
       </section>
     </>
   );
 };
 
+// Export the Home component
 export default Home;

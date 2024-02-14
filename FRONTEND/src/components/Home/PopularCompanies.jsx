@@ -1,8 +1,9 @@
+// Import React and necessary components/libraries
 import React from "react";
 import { FaMicrosoft, FaApple } from "react-icons/fa";
 import { SiTesla } from "react-icons/si";
 
-// PopularCompanies component
+// Functional component for displaying popular companies
 const PopularCompanies = () => {
   // Companies data
   const companies = [
@@ -10,21 +11,21 @@ const PopularCompanies = () => {
       id: 1,
       title: "Microsoft",
       location: "Street 10 Delhi, India",
-      openSchemes: 10,
+      openPositions: 10,
       icon: <FaMicrosoft />,
     },
     {
       id: 2,
       title: "Tesla",
       location: "Street 10 Delhi, India",
-      openSchemes: 5,
+      openPositions: 5,
       icon: <SiTesla />,
     },
     {
       id: 3,
       title: "Apple",
       location: "Street 10 Delhi, India",
-      openSchemes: 20,
+      openPositions: 20,
       icon: <FaApple />,
     },
   ];
@@ -48,8 +49,8 @@ const PopularCompanies = () => {
                     <p>{element.location}</p>
                   </div>
                 </div>
-                {/* Button to view open schemes */}
-                <button>Open Schemes {element.openSchemes}</button>
+                {/* Button displaying open positions */}
+                <button>Open Positions {element.openPositions}</button>
               </div>
             );
           })}
@@ -59,4 +60,5 @@ const PopularCompanies = () => {
   );
 };
 
+// Export the PopularCompanies component
 export default PopularCompanies;

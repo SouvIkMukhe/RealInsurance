@@ -1,15 +1,15 @@
+// Import React and necessary components/libraries
 import React, { useContext, useState } from "react";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaPencilAlt } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLock2Fill } from "react-icons/ri";
-import { FaPencilAlt } from "react-icons/fa";
 import { FaPhoneFlip } from "react-icons/fa6";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Context } from "../../main";
 
-// Register component
+// Functional component for the Registration page
 const Register = () => {
   // State variables for user input
   const [email, setEmail] = useState("");
@@ -18,13 +18,14 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
-  // Context for user authorization and user data
-  const { isAuthorized, setIsAuthorized } = useContext(Context);
+  // Accessing the global context for authorization and user information
+  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
 
-  // Function to handle user registration
+  // Function to handle the registration form submission
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
+      // Make a POST request to the registration API endpoint
       const { data } = await axios.post(
         "http://localhost:4000/api/v1/user/register",
         { name, phone, email, role, password },
@@ -35,8 +36,11 @@ const Register = () => {
           withCredentials: true,
         }
       );
+
+      // Display success toast message on successful registration
       toast.success(data.message);
-      // Clear form fields after successful registration
+
+      // Clear input fields and set authorization status to true
       setName("");
       setEmail("");
       setPassword("");
@@ -44,29 +48,31 @@ const Register = () => {
       setRole("");
       setIsAuthorized(true);
     } catch (error) {
+      // Display error toast message on registration failure
       toast.error(error.response.data.message);
     }
   };
 
-  // Redirect to home if already authorized
+  // Redirect to the home page if already authorized
   if (isAuthorized) {
     return <Navigate to={'/'} />;
   }
 
-  // Render the registration form
   return (
     <>
+      {/* Registration Page UI */}
       <section className="authPage">
         <div className="container">
           <div className="header">
-            <img src="/RealInsurance2.png" alt="logo" />
+            <img src="/RealInsurance3.png" alt="logo" />
             <h3>Create a new account</h3>
           </div>
+          {/* Registration Form */}
           <form>
             <div className="inputTag">
-              {/* Dropdown to select user role */}
               <label>Register As</label>
               <div>
+                {/* Dropdown for selecting user role */}
                 <select value={role} onChange={(e) => setRole(e.target.value)}>
                   <option value="">Select Role</option>
                   <option value="Admin">Admin</option>
@@ -76,9 +82,9 @@ const Register = () => {
               </div>
             </div>
             <div className="inputTag">
-              {/* Input for user's name */}
               <label>Name</label>
               <div>
+                {/* Input field for user name */}
                 <input
                   type="text"
                   placeholder="Souvik"
@@ -89,12 +95,12 @@ const Register = () => {
               </div>
             </div>
             <div className="inputTag">
-              {/* Input for email address */}
               <label>Email Address</label>
               <div>
+                {/* Input field for email */}
                 <input
                   type="email"
-                  placeholder="sou@gmail.com"
+                  placeholder="souvik@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -102,12 +108,12 @@ const Register = () => {
               </div>
             </div>
             <div className="inputTag">
-              {/* Input for phone number */}
               <label>Phone Number</label>
               <div>
+                {/* Input field for phone number */}
                 <input
                   type="number"
-                  placeholder="00000000"
+                  placeholder="0000000000"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                 />
@@ -115,9 +121,9 @@ const Register = () => {
               </div>
             </div>
             <div className="inputTag">
-              {/* Input for password */}
               <label>Password</label>
               <div>
+                {/* Input field for password */}
                 <input
                   type="password"
                   placeholder="Your Password"
@@ -127,7 +133,7 @@ const Register = () => {
                 <RiLock2Fill />
               </div>
             </div>
-            {/* Button to submit the registration form */}
+            {/* Submit button */}
             <button type="submit" onClick={handleRegister}>
               Register
             </button>
@@ -144,4 +150,5 @@ const Register = () => {
   );
 };
 
+// Export the Register component
 export default Register;

@@ -1,3 +1,4 @@
+// Import React and necessary components/libraries
 import React from "react";
 import {
   MdOutlineDesignServices,
@@ -9,7 +10,13 @@ import { TbAppsFilled } from "react-icons/tb";
 import { FaReact } from "react-icons/fa";
 import { GiArtificialIntelligence } from "react-icons/gi";
 import { IoGameController } from "react-icons/io5";
-
+import { FaCar } from "react-icons/fa";
+import { MdOutlineTwoWheeler } from "react-icons/md";
+import { FaFire } from "react-icons/fa";
+import { MdOutlineHome } from "react-icons/md";
+import { MdOutlineAirplanemodeActive } from "react-icons/md";
+import { MdOutlineDirectionsBoat } from "react-icons/md";
+import { FaShieldAlt } from "react-icons/fa";
 
 // PopularCategories component
 const PopularCategories = () => {
@@ -17,51 +24,51 @@ const PopularCategories = () => {
   const categories = [
     {
       id: 1,
-      title: "Life and Health",
+      title: "Life and Health Insurance",
       subTitle: "30 Open Schemes",
       icon: <MdOutlineDesignServices />,
     },
     {
       id: 2,
-      title: "Mobile and Laptop",
+      title: "Car Insurance",
       subTitle: "500 Open Schemes",
-      icon: <mdiMonitorCellphone />,
+      icon: <FaCar />,
     },
     {
       id: 3,
-      title: "Home",
+      title: "Home Insurance",
       subTitle: "200 Open Schemes",
-      icon: <MdOutlineWebhook />,
+      icon: <MdOutlineHome />,
     },
     {
       id: 4,
-      title: "Desktop",
+      title: "Two Wheeler Insurance",
       subTitle: "1000+ Open Schemes",
-      icon: <FaReact />,
+      icon: <MdOutlineTwoWheeler />,
     },
     {
       id: 5,
-      title: "Bank",
+      title: "Term insurance",
       subTitle: "150 Open Schemes",
-      icon: <MdAccountBalance />,
+      icon: <FaShieldAlt />,
     },
     {
       id: 6,
-      title: "Tech",
+      title: "Travel Insurance",
       subTitle: "867 Open Schemes",
-      icon: <GiArtificialIntelligence />,
+      icon: <MdOutlineAirplanemodeActive />,
     },
     {
       id: 7,
-      title: "Fire ",
+      title: "Fire Insurance",
       subTitle: "50 Open Schemes",
-      icon: <MdOutlineAnimation />,
+      icon: <FaFire />,
     },
     {
       id: 8,
-      title: "Game ",
+      title: "Marine Insurance ",
       subTitle: "80 Open Schemes",
-      icon: <IoGameController />,
+      icon: <MdOutlineDirectionsBoat />,
     },
   ];
 
@@ -90,4 +97,5 @@ const PopularCategories = () => {
   );
 };
 
+// Export the PopularCategories component
 export default PopularCategories;

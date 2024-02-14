@@ -6,36 +6,36 @@ import { RxCross2 } from "react-icons/rx";
 import { Context } from "../../main";
 import { useNavigate } from "react-router-dom";
 
-const MyInsurances = () => {
-  const [myInsurances, setMyInsurances] = useState([]);
+const Myinsurances = () => {
+  const [myinsurances, setMyinsurances] = useState([]);
   const [editingMode, setEditingMode] = useState(null);
   const { isAuthorized, user } = useContext(Context);
 
   const navigateTo = useNavigate();
-  //Fetching all insurances
+  //Fetching all admins
   useEffect(() => {
-    const fetchInsurances = async () => {
+    const fetchinsurances = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:4000/api/v1/insurance/getmyinsurances",
+          "http://localhost:4000/api/v1/admin/getmyadmins",
           { withCredentials: true }
         );
-        setMyInsurances(data.myInsurances);
+        setMyinsurances(data.myinsurances);
       } catch (error) {
         toast.error(error.response.data.message);
-        setMyInsurances([]);
+        setMyinsurances([]);
       }
     };
-    fetchInsurances();
+    fetchinsurances();
   }, []);
-  if (!isAuthorized || (user && user.role !== "Employer")) {
+  if (!isAuthorized || (user && user.role !== "Admin")) {
     navigateTo("/");
   }
 
   //Function For Enabling Editing Mode
-  const handleEnableEdit = (insuranceId) => {
-    //Here We Are Giving Id in setEditingMode because We want to enable only that insurance whose ID has been send.
-    setEditingMode(insuranceId);
+  const handleEnableEdit = (adminId) => {
+    //Here We Are Giving Id in setEditingMode because We want to enable only that admin whose ID has been send.
+    setEditingMode(adminId);
   };
 
   //Function For Disabling Editing Mode
@@ -43,11 +43,11 @@ const MyInsurances = () => {
     setEditingMode(null);
   };
 
-  //Function For Updating The Insurance
-  const handleUpdateInsurance = async (insuranceId) => {
-    const updatedInsurance = myInsurances.find((insurance) => insurance._id === insuranceId);
+  //Function For Updating The insurance
+  const handleUpdateinsurance = async (adminId) => {
+    const updatedinsurance = myinsurances.find((admin) => admin._id === adminId);
     await axios
-      .put(`http://localhost:4000/api/v1/insurance/update/${insuranceId}`, updatedInsurance, {
+      .put(`http://localhost:4000/api/v1/admin/update/${adminId}`, updatedinsurance, {
         withCredentials: true,
       })
       .then((res) => {
@@ -59,39 +59,39 @@ const MyInsurances = () => {
       });
   };
 
-  //Function For Deleting Insurance
-  const handleDeleteInsurance = async (insuranceId) => {
+  //Function For Deleting insurance
+  const handleDeleteinsurance = async (adminId) => {
     await axios
-      .delete(`http://localhost:4000/api/v1/insurance/delete/${insuranceId}`, {
+      .delete(`http://localhost:4000/api/v1/admin/delete/${adminId}`, {
         withCredentials: true,
       })
       .then((res) => {
         toast.success(res.data.message);
-        setMyInsurances((prevInsurances) => prevInsurances.filter((insurance) => insurance._id !== insuranceId));
+        setMyinsurances((previnsurances) => previnsurances.filter((admin) => admin._id !== adminId));
       })
       .catch((error) => {
         toast.error(error.response.data.message);
       });
   };
 
-  const handleInputChange = (insuranceId, field, value) => {
-    // Update the insurance object in the insurances state with the new value
-    setMyInsurances((prevInsurances) =>
-      prevInsurances.map((insurance) =>
-        insurance._id === insuranceId ? { ...insurance, [field]: value } : insurance
+  const handleInputChange = (adminId, field, value) => {
+    // Update the admin object in the admins state with the new value
+    setMyinsurances((previnsurances) =>
+      previnsurances.map((admin) =>
+        admin._id === adminId ? { ...admin, [field]: value } : admin
       )
     );
   };
 
   return (
     <>
-      <div className="myInsurances page">
+      <div className="myinsurances page">
         <div className="container">
-          <h1>Your Posted Insurances</h1>
-          {myInsurances.length > 0 ? (
+          <h1>Your Posted insurances</h1>
+          {myinsurances.length > 0 ? (
             <>
               <div className="banner">
-                {myInsurances.map((element) => (
+                {myinsurances.map((element) => (
                   <div className="card" key={element._id}>
                     <div className="content">
                       <div className="short_fields">
@@ -162,52 +162,52 @@ const MyInsurances = () => {
                               editingMode !== element._id ? true : false
                             }
                           >
-                            <option value="Health">
-                              Health
+                            <option value="Graphics & Design">
+                              Graphics & Design
                             </option>
-                            <option value="Mobile ">
-                              Mobile 
+                            <option value="Mobile App Development">
+                              Mobile App Development
                             </option>
-                            <option value="Laptops">
-                              Laptops
+                            <option value="Frontend Web Development">
+                              Frontend Web Development
                             </option>
-                            <option value="Life">
-                              Life
+                            <option value="MERN Stack Development">
+                              MERN STACK Development
                             </option>
-                            <option value="Bank">
-                              Bank
+                            <option value="Account & Finance">
+                              Account & Finance
                             </option>
-                            <option value="Desktop">
-                              Desktop
+                            <option value="Artificial Intelligence">
+                              Artificial Intelligence
                             </option>
-                            <option value="Video">
-                              Video 
+                            <option value="Video Animation">
+                              Video Animation
                             </option>
-                            <option value="Development">
-                               Development
+                            <option value="MEAN Stack Development">
+                              MEAN STACK Development
                             </option>
-                            <option value="Technologies">
-                              Technologies
+                            <option value="MEVN Stack Development">
+                              MEVN STACK Development
                             </option>
-                            <option value="Data ">
-                              Data 
+                            <option value="Data Entry Operator">
+                              Data Entry Operator
                             </option>
                           </select>
                         </div>
                         <div>
                           <span>
-                            Premium:{" "}
-                            {element.fixedPremium ? (
+                            Salary:{" "}
+                            {element.fixedSalary ? (
                               <input
                                 type="number"
                                 disabled={
                                   editingMode !== element._id ? true : false
                                 }
-                                value={element.fixedPremium}
+                                value={element.fixedSalary}
                                 onChange={(e) =>
                                   handleInputChange(
                                     element._id,
-                                    "fixedPremium",
+                                    "fixedSalary",
                                     e.target.value
                                   )
                                 }
@@ -310,7 +310,7 @@ const MyInsurances = () => {
                         {editingMode === element._id ? (
                           <>
                             <button
-                              onClick={() => handleUpdateInsurance(element._id)}
+                              onClick={() => handleUpdateinsurance(element._id)}
                               className="check_btn"
                             >
                               <FaCheck />
@@ -332,7 +332,7 @@ const MyInsurances = () => {
                         )}
                       </div>
                       <button
-                        onClick={() => handleDeleteInsurance(element._id)}
+                        onClick={() => handleDeleteinsurance(element._id)}
                         className="delete_btn"
                       >
                         Delete
@@ -344,7 +344,7 @@ const MyInsurances = () => {
             </>
           ) : (
             <p>
-              You've not posted any insurance or may be you deleted all of your insurances!
+              You've not posted any admin or may be you deleted all of your admins!
             </p>
           )}
         </div>
@@ -353,4 +353,4 @@ const MyInsurances = () => {
   );
 };
 
-export default MyInsurances;
+export default Myinsurances;

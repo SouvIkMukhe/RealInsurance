@@ -1,9 +1,10 @@
+// Import React and necessary components/libraries
 import React from "react";
 import { FaBuilding, FaSuitcase, FaUsers, FaUserPlus } from "react-icons/fa";
 
-// HeroSection component
+// Functional component for the Hero Section of the website
 const HeroSection = () => {
-  // Details for statistics cards
+  // Details for the statistics cards
   const details = [
     {
       id: 1,
@@ -31,23 +32,21 @@ const HeroSection = () => {
     },
   ];
 
-  // Render the HeroSection component
   return (
     <>
+      {/* Hero Section UI */}
       <div className="heroSection">
         <div className="container">
-          {/* Title and description */}
           <div className="title">
-            <h1>Discover Insurance Tailored for You</h1>
+            {/* Title and sub-title for the hero section */}
+            <h1>Secure Your Future with Insurances</h1>
+            <h1>Explore Policies to Your Needs</h1>
             <p>
-              Explore a diverse range of insurance options designed to meet your unique
-              needs and financial goals. We understand that life is full of uncertainties,
-              and our mission is to provide you with comprehensive coverage that brings
-              peace of mind.
+              Discover the peace of mind that comes with choosing the perfect insurance coverage. Buy insurance that safeguards your future and meets your unique requirements. Find the protection you need for a confident and secure tomorrow.
             </p>
           </div>
-          {/* Image */}
           <div className="image">
+            {/* Hero image */}
             <img src="/heroT.png" alt="hero" />
           </div>
         </div>
@@ -58,6 +57,7 @@ const HeroSection = () => {
               <div className="card" key={element.id}>
                 <div className="icon">{element.icon}</div>
                 <div className="content">
+                  {/* Displaying statistics title and sub-title */}
                   <p>{element.title}</p>
                   <p>{element.subTitle}</p>
                 </div>
@@ -70,4 +70,5 @@ const HeroSection = () => {
   );
 };
 
+// Export the HeroSection component
 export default HeroSection;

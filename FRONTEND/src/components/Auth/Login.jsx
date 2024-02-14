@@ -1,3 +1,4 @@
+// Import React and necessary components/libraries
 import React, { useContext, useState } from "react";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLock2Fill } from "react-icons/ri";
@@ -7,20 +8,21 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Context } from "../../main";
 
-// Login component
+// Functional component for the Login page
 const Login = () => {
   // State variables for user input
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
-  // Context for user authorization
+  // Accessing the global context for authorization
   const { isAuthorized, setIsAuthorized } = useContext(Context);
 
-  // Function to handle login form submission
+  // Function to handle the login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      // Make a POST request to the login API endpoint
       const { data } = await axios.post(
         "http://localhost:4000/api/v1/user/login",
         { email, password, role },
@@ -31,35 +33,41 @@ const Login = () => {
           withCredentials: true,
         }
       );
+
+      // Display success toast message on successful login
       toast.success(data.message);
+
+      // Clear input fields and set authorization status to true
       setEmail("");
       setPassword("");
       setRole("");
       setIsAuthorized(true);
     } catch (error) {
+      // Display error toast message on login failure
       toast.error(error.response.data.message);
     }
   };
 
-  // Redirect to home if already authorized
+  // Redirect to the home page if already authorized
   if (isAuthorized) {
     return <Navigate to={'/'} />;
   }
 
-  // Render the login form
   return (
     <>
+      {/* Login Page UI */}
       <section className="authPage">
         <div className="container">
           <div className="header">
-            <img src="/RealInsurance3.png" alt="logo" />
+            <img src="/RealInsurance2.png" alt="logo" />
             <h3>Login to your account</h3>
           </div>
+          {/* Login Form */}
           <form>
             <div className="inputTag">
-              {/* Dropdown to select user role */}
               <label>Login As</label>
               <div>
+                {/* Dropdown for selecting user role */}
                 <select value={role} onChange={(e) => setRole(e.target.value)}>
                   <option value="">Select Role</option>
                   <option value="Admin">Admin</option>
@@ -69,12 +77,12 @@ const Login = () => {
               </div>
             </div>
             <div className="inputTag">
-              {/* Input for email address */}
               <label>Email Address</label>
               <div>
+                {/* Input field for email */}
                 <input
                   type="email"
-                  placeholder="sou@gmail.com"
+                  placeholder="souvik@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -82,9 +90,9 @@ const Login = () => {
               </div>
             </div>
             <div className="inputTag">
-              {/* Input for password */}
               <label>Password</label>
               <div>
+                {/* Input field for password */}
                 <input
                   type="password"
                   placeholder="Your Password"
@@ -94,7 +102,7 @@ const Login = () => {
                 <RiLock2Fill />
               </div>
             </div>
-            {/* Button to submit the login form */}
+            {/* Submit button */}
             <button type="submit" onClick={handleLogin}>
               Login
             </button>
@@ -111,4 +119,5 @@ const Login = () => {
   );
 };
 
+// Export the Login component
 export default Login;

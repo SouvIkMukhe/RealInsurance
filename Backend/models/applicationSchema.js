@@ -1,8 +1,6 @@
-// Importing required modules
 import mongoose from "mongoose";
 import validator from "validator";
 
-// Creating the application schema
 const applicationSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -29,23 +27,18 @@ const applicationSchema = new mongoose.Schema({
   },
   aadhar: {
     public_id: {
-      type: String,
+      type: String, 
       required: true,
     },
     url: {
-      type: String,
+      type: String, 
       required: true,
     },
-  },
-  status: {
-    type: String,
-    enum: ['pending', 'accepted', 'rejected'],
-    default: 'pending',
   },
   applicantID: {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // Reference to the User model
+      ref: "User",
       required: true,
     },
     role: {
@@ -57,7 +50,7 @@ const applicationSchema = new mongoose.Schema({
   adminID: {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // Reference to the User model
+      ref: "User",
       required: true,
     },
     role: {
@@ -68,5 +61,4 @@ const applicationSchema = new mongoose.Schema({
   },
 });
 
-// Creating the Application model from the schema
 export const Application = mongoose.model("Application", applicationSchema);

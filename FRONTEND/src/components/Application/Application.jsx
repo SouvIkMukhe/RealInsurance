@@ -1,13 +1,10 @@
-// Import necessary modules and files
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../main";
 
-// Application component
 const Application = () => {
-  // State variables for form inputs and file
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [coverLetter, setCoverLetter] = useState("");
@@ -15,14 +12,9 @@ const Application = () => {
   const [address, setAddress] = useState("");
   const [aadhar, setAadhar] = useState(null);
 
-  // Context for user authorization
   const { isAuthorized, user } = useContext(Context);
 
-  // Navigation hook
   const navigateTo = useNavigate();
-
-  // Get insurance ID from route parameters
-  const { id } = useParams();
 
   // Function to handle file input changes
   const handleFileChange = (event) => {
@@ -30,7 +22,8 @@ const Application = () => {
     setAadhar(aadhar);
   };
 
-  // Function to handle application form submission
+  const { id } = useParams();
+
   const handleApplication = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -43,7 +36,6 @@ const Application = () => {
     formData.append("insuranceId", id);
 
     try {
-      // Send application data to the server using Axios
       const { data } = await axios.post(
         "http://localhost:4000/api/v1/application/post",
         formData,
@@ -54,8 +46,6 @@ const Application = () => {
           },
         }
       );
-
-      // Reset form fields, show success toast, and navigate to the insurance page
       setName("");
       setEmail("");
       setCoverLetter("");
@@ -65,43 +55,21 @@ const Application = () => {
       toast.success(data.message);
       navigateTo("/insurance/getall");
     } catch (error) {
-      // Display error toast if the server request fails
       toast.error(error.response.data.message);
     }
   };
 
-  // Function to handle admin decision
-  const handleAdminDecision = async (decision) => {
-    try {
-      // Send admin decision to the server using Axios
-      const { data } = await axios.patch(
-        `http://localhost:4000/api/v1/application/adminDecision/${id}`,
-        { decision },
-        { withCredentials: true }
-      );
-
-      // Show success toast and navigate to the insurance page
-      toast.success(data.message);
-      navigateTo("/insurance/getall");
-    } catch (error) {
-      // Display error toast if the server request fails
-      toast.error(error.response.data.message);
-    }
-  };
-
-  // Redirect to home if not authorized or user is an admin
-  if (!isAuthorized || (user && user.role === "Admin")) {
+  // Redirect if not authorized or user is an employer
+  if (!isAuthorized || (user && user.role === "Employer")) {
     navigateTo("/");
   }
 
-  // Render the application form
   return (
     <section className="application">
       <div className="container">
         <h3>Application Form</h3>
-        {/* Form for the user to fill out the insurance application */}
         <form onSubmit={handleApplication}>
-          {/* Input fields for user information */}
+          {/* Input fields for the application form */}
           <input
             type="text"
             placeholder="Your Name"
@@ -126,14 +94,13 @@ const Application = () => {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
-          {/* Textarea for the cover letter */}
           <textarea
-            placeholder="CoverLetter..."
+            placeholder="Cover Letter..."
             value={coverLetter}
             onChange={(e) => setCoverLetter(e.target.value)}
           />
           <div>
-            {/* Input for selecting Aadhar file */}
+            {/* File input for Aadhar document */}
             <label
               style={{ textAlign: "start", display: "block", fontSize: "20px" }}
             >
@@ -146,16 +113,12 @@ const Application = () => {
               style={{ width: "100%" }}
             />
           </div>
-          {/* Button to submit the application form */}
+          {/* Submit button */}
           <button type="submit">Send Application</button>
         </form>
-
-        {/* Admin actions */}
-        
       </div>
     </section>
   );
 };
 
-// Export the Application component as the default export
 export default Application;

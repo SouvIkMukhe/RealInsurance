@@ -1,22 +1,22 @@
 import React from "react";
 
-// AadharModal component takes imageUrl and onClose as props
+// AadharModal component displays a modal with an image of an Aadhar card.
+// Props:
+//   - imageUrl: the URL of the Aadhar card image to be displayed
+//   - onClose: a function to be called when the modal is closed
 const AadharModal = ({ imageUrl, onClose }) => {
   return (
-    // Outer div for the modal with aadhar-modal class
     <div className="aadhar-modal">
-      {/* Inner div for the modal content with modal-content class */}
       <div className="modal-content">
-        {/* Close button represented by '×' symbol, onClick triggers the onClose function */}
+        {/* Close button (×) triggers the onClose function */}
         <span className="close" onClick={onClose}>
           &times;
         </span>
-        {/* Image tag displaying the Aadhar card image using the provided imageUrl */}
+        {/* Display Aadhar card image */}
         <img src={imageUrl} alt="aadhar" />
       </div>
     </div>
   );
 };
 
-// Exporting AadharModal component as the default export
 export default AadharModal;

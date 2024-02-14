@@ -3,9 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../main";
-
 const PostInsurance = () => {
-  // State variables to manage form data
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -17,17 +15,13 @@ const PostInsurance = () => {
   const [fixedPremium, setFixedPremium] = useState("");
   const [premiumType, setPremiumType] = useState("default");
 
-  // Context for user authorization
   const { isAuthorized, user } = useContext(Context);
 
-  // Function to handle insurance post submission
   const handleInsurancePost = async (e) => {
     e.preventDefault();
-
-    // Clear premium values based on the selected premium type
     if (premiumType === "Fixed Premium") {
       setPremiumFrom("");
-      setPremiumTo("");
+      setPremiumFrom("");
     } else if (premiumType === "Ranged Premium") {
       setFixedPremium("");
     } else {
@@ -35,8 +29,6 @@ const PostInsurance = () => {
       setPremiumTo("");
       setFixedPremium("");
     }
-
-    // Send a POST request to the server to create a new insurance
     await axios
       .post(
         "http://localhost:4000/api/v1/insurance/post",
@@ -75,7 +67,6 @@ const PostInsurance = () => {
       });
   };
 
-  // Navigation hook for redirecting unauthorized users
   const navigateTo = useNavigate();
   if (!isAuthorized || (user && user.role !== "Admin")) {
     navigateTo("/");
@@ -85,9 +76,8 @@ const PostInsurance = () => {
     <>
       <div className="insurance_post page">
         <div className="container">
-          <h3>POST NEW INSURANCE</h3>
+          <h3>POST NEW JOB</h3>
           <form onSubmit={handleInsurancePost}>
-            {/* Input fields for insurance details */}
             <div className="wrapper">
               <input
                 type="text"
@@ -100,13 +90,28 @@ const PostInsurance = () => {
                 onChange={(e) => setCategory(e.target.value)}
               >
                 <option value="">Select Category</option>
-                <option value="Health">Health</option>
-                <option value="Fire">Fire</option>
-                <option value="Life">Life</option>
-                <option value="Building">Building</option>
-                <option value="Car">Car</option>
-                <option value="Bike">Bike</option>
-                {/* Add other category options here */}
+                <option value="Life and Health Insurance">Life and Health Insurance</option>
+                <option value="Car Insurance">
+                Car Insurance
+                </option>
+                <option value="Home Insurance">
+                Home Insurance
+                </option>
+                <option value="Two Wheeler Insurance">
+                Two Wheeler Insurance
+                </option>
+                <option value="Term insurance">Term insurance</option>
+                <option value="Travel Insurance">
+                Travel Insurance
+                </option>
+                <option value="Fire Insurance">Fire Insurance</option>
+                <option value="Marine Insurance">
+                Marine Insurance
+                </option>
+                <option value="Insurance insurance">
+                Insurance insurance
+                </option>
+                <option value="Data Insurance">Data Insurance</option>
               </select>
             </div>
             <div className="wrapper">
@@ -129,7 +134,6 @@ const PostInsurance = () => {
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Location"
             />
-            {/* Premium type selection and corresponding input fields */}
             <div className="premium_wrapper">
               <select
                 value={premiumType}
@@ -167,14 +171,12 @@ const PostInsurance = () => {
                 )}
               </div>
             </div>
-            {/* Textarea for insurance description */}
             <textarea
               rows="10"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Insurance Description"
             />
-            {/* Submit button */}
             <button type="submit">Create Insurance</button>
           </form>
         </div>

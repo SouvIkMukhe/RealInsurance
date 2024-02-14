@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
-import AadharModal from "./AadharModal";
 import { useNavigate } from "react-router-dom";
+import AadharModal from "./AadharModal";
 
-// MyApplications component
+// Component to display user's insurance applications
 const MyApplications = () => {
   const { user } = useContext(Context);
   const [applications, setApplications] = useState([]);
@@ -15,60 +15,37 @@ const MyApplications = () => {
   const { isAuthorized } = useContext(Context);
   const navigateTo = useNavigate();
 
-  // Function to handle actions (accept/reject) on insurance applications
-  const handleApplicationAction = async (id, action) => {
-    try {
-      const res = await axios.patch(
-        `http://localhost:4000/api/v1/application/${action}/${id}`,
-        null,
-        {
-          withCredentials: true,
-        }
-      );
-
-      toast.success(res.data.message);
-
-      setApplications((prevApplications) => {
-        return prevApplications.map((app) =>
-          app._id === id ? { ...app, status: action } : app
-        );
-      });
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
-  };
-
+  // Fetch user's applications based on their role
   useEffect(() => {
     try {
-      // Fetch applications based on user role (Admin or Insurance Seeker)
-      const fetchApplications = async () => {
-        let response;
-
-        if (user && user.role === "Admin") {
-          response = await axios.get("http://localhost:4000/api/v1/application/admin/getall", {
+      if (user && user.role === "Insurance Seeker") {
+        axios
+          .get("http://localhost:4000/api/v1/application/insuranceseeker/getall", {
             withCredentials: true,
+          })
+          .then((res) => {
+            setApplications(res.data.applications);
           });
-        } else {
-          response = await axios.get("http://localhost:4000/api/v1/application/insuranceseeker/getall", {
+      } else {
+        axios
+          .get("http://localhost:4000/api/v1/application/admin/getall", {
             withCredentials: true,
+          })
+          .then((res) => {
+            setApplications(res.data.applications);
           });
-        }
-
-        setApplications(response.data.applications);
-      };
-
-      fetchApplications();
+      }
     } catch (error) {
       toast.error(error.response.data.message);
     }
   }, [isAuthorized]);
 
-  // Redirect to home if not authorized
+  // Redirect to login page if not authorized
   if (!isAuthorized) {
     navigateTo("/");
   }
 
-  // Function to delete an application
+  // Delete a user's application
   const deleteApplication = (id) => {
     try {
       axios
@@ -86,13 +63,13 @@ const MyApplications = () => {
     }
   };
 
-  // Function to open the AadharModal with the clicked Aadhar image
+  // Open modal to view Aadhar image
   const openModal = (imageUrl) => {
     setAadharImageUrl(imageUrl);
     setModalOpen(true);
   };
 
-  // Function to close the AadharModal
+  // Close modal
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -100,7 +77,6 @@ const MyApplications = () => {
   return (
     <section className="my_applications page">
       {user && user.role === "Insurance Seeker" ? (
-        // Render applications for Insurance Seekers
         <div className="container">
           <h1>My Applications</h1>
           {applications.length <= 0 ? (
@@ -122,9 +98,8 @@ const MyApplications = () => {
           )}
         </div>
       ) : (
-        // Render applications for Admins
         <div className="container">
-          <h1>Applications From Insurance Seekers</h1>
+          <h1>Applications From Admin Seekers</h1>
           {applications.length <= 0 ? (
             <>
               <h4>No Applications Found</h4>
@@ -136,14 +111,12 @@ const MyApplications = () => {
                   element={element}
                   key={element._id}
                   openModal={openModal}
-                  handleApplicationAction={handleApplicationAction}
                 />
               );
             })
           )}
         </div>
       )}
-      {/* Render AadharModal if modalOpen state is true */}
       {modalOpen && (
         <AadharModal imageUrl={aadharImageUrl} onClose={closeModal} />
       )}
@@ -153,13 +126,12 @@ const MyApplications = () => {
 
 export default MyApplications;
 
-// InsuranceSeekerCard component
+// Component to display insurance seeker's application card
 const InsuranceSeekerCard = ({ element, deleteApplication, openModal }) => {
   return (
     <>
       <div className="insurance_seeker_card">
         <div className="detail">
-          {/* Display user details */}
           <p>
             <span>Name:</span> {element.name}
           </p>
@@ -173,11 +145,10 @@ const InsuranceSeekerCard = ({ element, deleteApplication, openModal }) => {
             <span>Address:</span> {element.address}
           </p>
           <p>
-            <span>CoverLetter:</span> {element.coverLetter}
+            <span>Cover Letter:</span> {element.coverLetter}
           </p>
         </div>
         <div className="aadhar">
-          {/* Display Aadhar image with click handler to open modal */}
           <img
             src={element.aadhar.url}
             alt="aadhar"
@@ -185,7 +156,6 @@ const InsuranceSeekerCard = ({ element, deleteApplication, openModal }) => {
           />
         </div>
         <div className="btn_area">
-          {/* Button to delete the application */}
           <button onClick={() => deleteApplication(element._id)}>
             Delete Application
           </button>
@@ -195,13 +165,12 @@ const InsuranceSeekerCard = ({ element, deleteApplication, openModal }) => {
   );
 };
 
-// AdminCard component
-const AdminCard = ({ element, openModal, handleApplicationAction }) => {
+// Component to display admin's application card
+const AdminCard = ({ element, openModal }) => {
   return (
     <>
       <div className="insurance_seeker_card">
         <div className="detail">
-          {/* Display user details */}
           <p>
             <span>Name:</span> {element.name}
           </p>
@@ -215,26 +184,15 @@ const AdminCard = ({ element, openModal, handleApplicationAction }) => {
             <span>Address:</span> {element.address}
           </p>
           <p>
-            <span>CoverLetter:</span> {element.coverLetter}
+            <span>Cover Letter:</span> {element.coverLetter}
           </p>
         </div>
         <div className="aadhar">
-          {/* Display Aadhar image with click handler to open modal */}
           <img
             src={element.aadhar.url}
             alt="aadhar"
             onClick={() => openModal(element.aadhar.url)}
           />
-        </div>
-        <div className="btn_area">
-          {/* Buttons to accept or reject the application */}
-          {/*
-          <button onClick={() => handleApplicationAction(element._id, "accept")}>
-            Accept Application
-          </button>
-          <button onClick={() => handleApplicationAction(element._id, "reject")}>
-            Reject Application
-  </button>*/}
         </div>
       </div>
     </>
