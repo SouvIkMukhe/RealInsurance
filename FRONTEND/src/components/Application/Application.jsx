@@ -95,7 +95,7 @@ const Application = () => {
             onChange={(e) => setAddress(e.target.value)}
           />
           <textarea
-            placeholder="Cover Letter..."
+            placeholder="Additional Information..."
             value={coverLetter}
             onChange={(e) => setCoverLetter(e.target.value)}
           />

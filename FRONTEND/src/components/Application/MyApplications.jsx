@@ -99,7 +99,7 @@ const MyApplications = () => {
         </div>
       ) : (
         <div className="container">
-          <h1>Applications From Admin Seekers</h1>
+          <h1>Applications From Insurance Seekers</h1>
           {applications.length <= 0 ? (
             <>
               <h4>No Applications Found</h4>

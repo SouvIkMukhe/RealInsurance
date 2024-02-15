@@ -23,3 +23,16 @@ export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
   // Continue to the next middleware or route
   next();
 });
+
+// Middleware function to protect routes for admin access
+export const protect = (req, res, next) => {
+  // Check for and verify token
+  // ...
+
+  // Ensure user is an admin
+  if (!req.user.roles.includes('Admin')) {
+    return next(new ErrorHandler('Unauthorized access', 401));
+  }
+
+  next();
+};

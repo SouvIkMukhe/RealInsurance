@@ -16,10 +16,10 @@ const applicationSchema = new mongoose.Schema({
     required: [true, "Please enter your Email!"],
     validate: [validator.isEmail, "Please provide a valid Email!"],
   },
-  // Cover letter submitted by the applicant
-  coverLetter: {
+  // ADDITIONAL INFORMATION  submitted by the applicant
+  Additional_Information: {
     type: String,
-    required: [true, "Please provide a cover letter!"],
+    required: [true, "Please provide Additional Details!"],
   },
   // Phone number of the applicant
   phone: {
@@ -67,6 +67,12 @@ const applicationSchema = new mongoose.Schema({
       enum: ["Admin"],
       required: true,
     },
+  },
+  // Status of the application
+  status: {
+    type: String,
+    enum: ['pending', 'accepted', 'rejected'],
+    default: 'pending',
   },
 });
 

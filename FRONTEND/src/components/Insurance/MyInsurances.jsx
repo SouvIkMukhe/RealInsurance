@@ -1,4 +1,3 @@
-// Import necessary dependencies
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -7,108 +6,102 @@ import { RxCross2 } from "react-icons/rx";
 import { Context } from "../../main";
 import { useNavigate } from "react-router-dom";
 
-// MyInsurances component
-const Myinsurances = () => {
-  // State variables
-  const [myinsurances, setMyinsurances] = useState([]);
+const MyInsurances = () => {
+  const [myInsurances, setMyInsurances] = useState([]);
   const [editingMode, setEditingMode] = useState(null);
   const { isAuthorized, user } = useContext(Context);
 
   const navigateTo = useNavigate();
-
-  // Fetching user's insurances on component mount
+  //Fetching all insurances
   useEffect(() => {
     const fetchInsurances = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:4000/api/v1/admin/getmyadmins",
+          "http://localhost:4000/api/v1/insurance/getmyinsurances",
           { withCredentials: true }
         );
-        setMyinsurances(data.myinsurances);
+        setMyInsurances(data.myInsurances);
       } catch (error) {
         toast.error(error.response.data.message);
-        setMyinsurances([]);
+        setMyInsurances([]);
       }
     };
     fetchInsurances();
   }, []);
-
-  // Redirect to home if not authorized or not an admin
   if (!isAuthorized || (user && user.role !== "Admin")) {
     navigateTo("/");
   }
 
-  // Enable Editing Mode for a specific insurance
-  const handleEnableEdit = (adminId) => {
-    setEditingMode(adminId);
+  //Function For Enabling Editing Mode
+  const handleEnableEdit = (insuranceId) => {
+    //Here We Are Giving Id in setEditingMode because We want to enable only that insurance whose ID has been send.
+    setEditingMode(insuranceId);
   };
 
-  // Disable Editing Mode
+  //Function For Disabling Editing Mode
   const handleDisableEdit = () => {
     setEditingMode(null);
   };
 
-  // Update the insurance details
-  const handleUpdateInsurance = async (adminId) => {
-    const updatedInsurance = myinsurances.find((admin) => admin._id === adminId);
-    try {
-      const res = await axios.put(
-        `http://localhost:4000/api/v1/admin/update/${adminId}`,
-        updatedInsurance,
-        { withCredentials: true }
-      );
-      toast.success(res.data.message);
-      setEditingMode(null);
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
+  //Function For Updating The Insurance
+  const handleUpdateInsurance = async (insuranceId) => {
+    const updatedInsurance = myInsurances.find((insurance) => insurance._id === insuranceId);
+    await axios
+      .put(`http://localhost:4000/api/v1/insurance/update/${insuranceId}`, updatedInsurance, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        setEditingMode(null);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      });
   };
 
-  // Delete an insurance
-  const handleDeleteInsurance = async (adminId) => {
-    try {
-      const res = await axios.delete(
-        `http://localhost:4000/api/v1/admin/delete/${adminId}`,
-        { withCredentials: true }
-      );
-      toast.success(res.data.message);
-      setMyinsurances((previnsurances) =>
-        previnsurances.filter((admin) => admin._id !== adminId)
-      );
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
+  //Function For Deleting Insurance
+  const handleDeleteInsurance = async (insuranceId) => {
+    await axios
+      .delete(`http://localhost:4000/api/v1/insurance/delete/${insuranceId}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        setMyInsurances((prevInsurances) => prevInsurances.filter((insurance) => insurance._id !== insuranceId));
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      });
   };
 
-  // Handle input changes for an insurance
-  const handleInputChange = (adminId, field, value) => {
-    setMyinsurances((previnsurances) =>
-      previnsurances.map((admin) =>
-        admin._id === adminId ? { ...admin, [field]: value } : admin
+  const handleInputChange = (insuranceId, field, value) => {
+    // Update the insurance object in the insurances state with the new value
+    setMyInsurances((prevInsurances) =>
+      prevInsurances.map((insurance) =>
+        insurance._id === insuranceId ? { ...insurance, [field]: value } : insurance
       )
     );
   };
 
-  // JSX rendering
   return (
     <>
-      <div className="myinsurances page">
+      <div className="myInsurances page">
         <div className="container">
-          <h1>Your Posted insurances</h1>
-          {myinsurances.length > 0 ? (
+          <h1>Your Posted Insurances</h1>
+          {myInsurances.length > 0 ? (
             <>
               <div className="banner">
-                {myinsurances.map((element) => (
+                {myInsurances.map((element) => (
                   <div className="card" key={element._id}>
                     <div className="content">
-                      {/* Short Fields Section */}
                       <div className="short_fields">
-                        {/* Title */}
                         <div>
                           <span>Title:</span>
                           <input
                             type="text"
-                            disabled={editingMode !== element._id}
+                            disabled={
+                              editingMode !== element._id ? true : false
+                            }
                             value={element.title}
                             onChange={(e) =>
                               handleInputChange(
@@ -119,13 +112,14 @@ const Myinsurances = () => {
                             }
                           />
                         </div>
-                        {/* Country */}
                         <div>
                           {" "}
                           <span>Country:</span>
                           <input
                             type="text"
-                            disabled={editingMode !== element._id}
+                            disabled={
+                              editingMode !== element._id ? true : false
+                            }
                             value={element.country}
                             onChange={(e) =>
                               handleInputChange(
@@ -136,12 +130,13 @@ const Myinsurances = () => {
                             }
                           />
                         </div>
-                        {/* City */}
                         <div>
                           <span>City:</span>
                           <input
                             type="text"
-                            disabled={editingMode !== element._id}
+                            disabled={
+                              editingMode !== element._id ? true : false
+                            }
                             value={element.city}
                             onChange={(e) =>
                               handleInputChange(
@@ -152,7 +147,6 @@ const Myinsurances = () => {
                             }
                           />
                         </div>
-                        {/* Category */}
                         <div>
                           <span>Category:</span>
                           <select
@@ -164,7 +158,9 @@ const Myinsurances = () => {
                                 e.target.value
                               )
                             }
-                            disabled={editingMode !== element._id}
+                            disabled={
+                              editingMode !== element._id ? true : false
+                            }
                           >
                             <option value="Life and Health Insurance">Life and Health Insurance</option>
                 <option value="Car Insurance">
@@ -190,14 +186,15 @@ const Myinsurances = () => {
                 <option value="Data Insurance">Data Insurance</option>
                           </select>
                         </div>
-                        {/* Premium */}
                         <div>
                           <span>
                             Premium:{" "}
                             {element.fixedPremium ? (
                               <input
                                 type="number"
-                                disabled={editingMode !== element._id}
+                                disabled={
+                                  editingMode !== element._id ? true : false
+                                }
                                 value={element.fixedPremium}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -211,7 +208,9 @@ const Myinsurances = () => {
                               <div>
                                 <input
                                   type="number"
-                                  disabled={editingMode !== element._id}
+                                  disabled={
+                                    editingMode !== element._id ? true : false
+                                  }
                                   value={element.premiumFrom}
                                   onChange={(e) =>
                                     handleInputChange(
@@ -223,7 +222,9 @@ const Myinsurances = () => {
                                 />
                                 <input
                                   type="number"
-                                  disabled={editingMode !== element._id}
+                                  disabled={
+                                    editingMode !== element._id ? true : false
+                                  }
                                   value={element.premiumTo}
                                   onChange={(e) =>
                                     handleInputChange(
@@ -237,7 +238,6 @@ const Myinsurances = () => {
                             )}
                           </span>
                         </div>
-                        {/* Expired */}
                         <div>
                           {" "}
                           <span>Expired:</span>
@@ -250,23 +250,24 @@ const Myinsurances = () => {
                                 e.target.value
                               )
                             }
-                            disabled={editingMode !== element._id}
+                            disabled={
+                              editingMode !== element._id ? true : false
+                            }
                           >
                             <option value={true}>TRUE</option>
                             <option value={false}>FALSE</option>
                           </select>
                         </div>
                       </div>
-
-                      {/* Long Fields Section */}
                       <div className="long_field">
-                        {/* Description */}
                         <div>
                           <span>Description:</span>{" "}
                           <textarea
                             rows={5}
                             value={element.description}
-                            disabled={editingMode !== element._id}
+                            disabled={
+                              editingMode !== element._id ? true : false
+                            }
                             onChange={(e) =>
                               handleInputChange(
                                 element._id,
@@ -276,13 +277,14 @@ const Myinsurances = () => {
                             }
                           />
                         </div>
-                        {/* Location */}
                         <div>
                           <span>Location: </span>
                           <textarea
                             value={element.location}
                             rows={5}
-                            disabled={editingMode !== element._id}
+                            disabled={
+                              editingMode !== element._id ? true : false
+                            }
                             onChange={(e) =>
                               handleInputChange(
                                 element._id,
@@ -334,7 +336,7 @@ const Myinsurances = () => {
             </>
           ) : (
             <p>
-              You've not posted any admin or may be you deleted all of your admins!
+              You've not posted any insurance or may be you deleted all of your insurances!
             </p>
           )}
         </div>
@@ -343,4 +345,4 @@ const Myinsurances = () => {
   );
 };
 
-export default Myinsurances;
+export default MyInsurances;

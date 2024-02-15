@@ -76,7 +76,7 @@ const PostInsurance = () => {
     <>
       <div className="insurance_post page">
         <div className="container">
-          <h3>POST NEW JOB</h3>
+          <h3>POST NEW INSURANCE</h3>
           <form onSubmit={handleInsurancePost}>
             <div className="wrapper">
               <input
