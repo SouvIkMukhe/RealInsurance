@@ -20,7 +20,7 @@ export const postApplication = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Aadhar File Required!", 400));
   }
 
-  // Validate the format of the Aadhar file
+  // Validate the format of the Aadhar file MultiPurposeInternetMailExtension
   const { aadhar } = req.files;
   const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
   if (!allowedFormats.includes(aadhar.mimetype)) {

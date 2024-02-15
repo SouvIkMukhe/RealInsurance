@@ -124,7 +124,7 @@ export const updateInsurance = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("OOPS! Insurance not found.", 404));
   }
   
-  // Update the insurance and get the updated document
+  // Update the insurance and get the updated documenttt
   insurance = await Insurance.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,

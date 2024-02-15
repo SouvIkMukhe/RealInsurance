@@ -16,10 +16,10 @@ const applicationSchema = new mongoose.Schema({
     required: [true, "Please enter your Email!"],
     validate: [validator.isEmail, "Please provide a valid Email!"],
   },
-  // ADDITIONAL INFORMATION  submitted by the applicant
-  Additional_Information: {
+  // Cover Letter submitted by the applicant
+  coverLetter: {
     type: String,
-    required: [true, "Please provide Additional Details!"],
+    required: [true, "Please provide Cover Letter!"],
   },
   // Phone number of the applicant
   phone: {
